@@ -1,4 +1,16 @@
 #################
+## Unity
+#################
+Library/
+Temp/
+Build/
+Source/
+*.csproj
+fairplay.sln
+
+
+
+#################
 ## Eclipse
 #################
 
