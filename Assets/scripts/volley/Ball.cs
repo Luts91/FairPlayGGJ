@@ -5,10 +5,14 @@ public class Ball : MonoBehaviour {
 
 	Rigidbody2D r;
 	float bounce=100;
+	Vector3 startPos;
+
 
 	// Use this for initialization
 	void Start () {
+		startPos=transform.position;
 		r=GetComponent<Rigidbody2D>();
+		Restart();
 	}
 	
 	// Update is called once per frame
@@ -26,8 +30,11 @@ public class Ball : MonoBehaviour {
 		if (hit)
 			Bounce(-1,0);
 		hit=Physics2D.Raycast(transform.position,Vector2.down,1,lm);
-		if (hit)
+		if (hit){
 			Bounce(0,1);
+			if (transform.position.y<-3)
+				VolleyController.vc.RoundOver(transform.position.x);
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D c){
@@ -38,6 +45,11 @@ public class Ball : MonoBehaviour {
 
 	void Bounce(float x,float y){
 		r.AddForce(new Vector2(x*bounce,y*bounce));
+	}
+
+	public void Restart(){
+		transform.position=startPos;
+		r.velocity=new Vector2(Random.value-1+2, Random.value+3);
 	}
 		
 }
