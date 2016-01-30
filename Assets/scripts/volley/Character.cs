@@ -51,6 +51,10 @@ public class Character : MonoBehaviour {
 			transform.position=new Vector2(-1,transform.position.y);
 		if (startX>0 && transform.position.x<0)
 			transform.position=new Vector2(1,transform.position.y);
+		if (transform.position.x<-9)
+			transform.position=new Vector2(-8,transform.position.y);
+		if (transform.position.x>9)
+			transform.position=new Vector2(8,transform.position.y);
 
 
 	}
