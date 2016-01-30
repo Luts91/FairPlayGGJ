@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour {
 
-	Rigidbody2D r;
+	public Rigidbody2D r;
 	float bounce=100;
 	Vector3 startPos;
 
@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour {
 		startPos=transform.position;
 		r=GetComponent<Rigidbody2D>();
 		Restart();
+		r.isKinematic=true;
 	}
 	
 	// Update is called once per frame
@@ -40,16 +41,25 @@ public class Ball : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D c){
 		if (c.gameObject.GetComponent<Character>()){
 			r.AddForce((transform.position-c.transform.position+Vector3.up*2)*200);
+
+			if (!GetComponent<AudioSource>().isPlaying){
+				GetComponent<AudioSource>().Play();
+			}
 		}
 	}
 
 	void Bounce(float x,float y){
 		r.AddForce(new Vector2(x*bounce,y*bounce));
+
+		if (!GetComponent<AudioSource>().isPlaying){
+			GetComponent<AudioSource>().Play();
+		}
 	}
 
 	public void Restart(){
 		transform.position=startPos;
-		r.velocity=new Vector2(Random.value-1+2, Random.value+3);
+		r.velocity=new Vector2(Random.value-2+1, Random.value+3);
+		r.isKinematic=false;
 	}
 		
 }

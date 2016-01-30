@@ -12,6 +12,9 @@ public class Sabotager : MonoBehaviour {
 	public bool thrown=false;
 	Rigidbody2D r;
 
+	public float canThrow=1;
+
+
 	// Use this for initialization
 	void Start () {
 		r=GetComponent<Rigidbody2D>();
@@ -20,9 +23,19 @@ public class Sabotager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!Menu.instance.gameIsRunning)
+			return;
+
+		canThrow-=Time.deltaTime;
+
+		if (canThrow>0)
+			return;
+
+
 		if (TurnController.tc.currentTurn!=0){
 			if (Input.GetMouseButtonDown(0)){
 				Throw();
+				TurnController.tc.cheated=true;
 			}
 		}else{
 			if (Random.value<sabotageProbability && stick.r.velocity.sqrMagnitude>0 && stick.transform.position.x>0){

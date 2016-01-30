@@ -20,6 +20,9 @@ public class RotateArrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!Menu.instance.gameIsRunning)
+			return;
+
 		if (increasing)
 			angle+=speed*Time.deltaTime;
 		else

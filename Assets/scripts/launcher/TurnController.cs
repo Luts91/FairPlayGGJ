@@ -16,7 +16,7 @@ public class TurnController : MonoBehaviour {
 	public Stick stick;
 	public Sabotager sabotager;
 
-
+	public bool cheated=false;
 
 	public static TurnController tc;
 	// Use this for initialization
@@ -28,6 +28,9 @@ public class TurnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!Menu.instance.gameIsRunning)
+			return;
+
 		if (nextTurn){
 			nextTurnTimer+=Time.deltaTime;
 			if (nextTurnTimer>=1){
@@ -62,6 +65,8 @@ public class TurnController : MonoBehaviour {
 				winner=i;
 			}
 		}
+
+		Menu.instance.EndGame("",cheated);
 	}
 
 
