@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (Input.GetKey(KeyCode.Space) && sabotageCooldown<=0){
+			VolleyController.vc.cheated=true;
 			enemy.stunned=0.5f;
 		}
 	}

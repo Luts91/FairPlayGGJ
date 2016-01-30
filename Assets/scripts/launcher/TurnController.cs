@@ -16,7 +16,7 @@ public class TurnController : MonoBehaviour {
 	public Stick stick;
 	public Sabotager sabotager;
 
-
+	public bool cheated=false;
 
 	public static TurnController tc;
 	// Use this for initialization
@@ -66,8 +66,7 @@ public class TurnController : MonoBehaviour {
 			}
 		}
 
-		Menu.instance.endPanel.SetActive(true);
-		Menu.instance.gameIsRunning=false;
+		Menu.instance.EndGame("",cheated);
 	}
 
 

@@ -23,6 +23,8 @@ public class VolleyController : MonoBehaviour {
 
 	public bool firstBall=false;
 
+	public bool cheated=false;
+
 	// Use this for initialization
 	void Start () {
 		vc=this;
@@ -97,7 +99,6 @@ public class VolleyController : MonoBehaviour {
 			}
 		}
 
-		Menu.instance.gameIsRunning=false;
-		Menu.instance.endPanel.SetActive(true);
+		Menu.instance.EndGame("",cheated);
 	}
 }

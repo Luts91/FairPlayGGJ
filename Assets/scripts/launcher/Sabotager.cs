@@ -35,6 +35,7 @@ public class Sabotager : MonoBehaviour {
 		if (TurnController.tc.currentTurn!=0){
 			if (Input.GetMouseButtonDown(0)){
 				Throw();
+				TurnController.tc.cheated=true;
 			}
 		}else{
 			if (Random.value<sabotageProbability && stick.r.velocity.sqrMagnitude>0 && stick.transform.position.x>0){
