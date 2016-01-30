@@ -50,4 +50,12 @@ public class Menu : MonoBehaviour {
         GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = winner;
         GameData.instance.cheated[SceneManager.GetActiveScene().buildIndex - 1] = cheated;
     }
+
+    public void BackToMain() {
+        GameData.instance.winners = new string[5];
+        GameData.instance.cheated = new bool[5];
+        SceneManager.LoadScene(0);
+        gameIsRunning = false;
+        endPanel.SetActive(true);
+    }
 }

@@ -14,7 +14,7 @@ public class EatingGameLogic : MonoBehaviour {
 
     public List<EatContestant> eatContestants = new List<EatContestant>();
     private float lastAttack = 0f;
-    private float attackCooldown = 5f;
+    private float attackCooldown = 3f;
     private int attackCount = 0;
 
     void Awake() {
@@ -37,7 +37,9 @@ public class EatingGameLogic : MonoBehaviour {
             player.Eat();
 
             // counterattack 
-            if (UnityEngine.Random.Range(0f, 1f) < attackCount / 10) {
+            double probabilityOfCounterattack = Math.Sin(Math.Min(1f, attackCount / 10f) * Math.PI / 2) / 2;
+            Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
+            if (UnityEngine.Random.Range(0f, 1f) < probabilityOfCounterattack) {
                 Broccoli.instance.ThrowBroccoli(leader, player);
             }
 
