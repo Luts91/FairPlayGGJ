@@ -37,6 +37,12 @@ public class ShoutController : MonoBehaviour {
 
 	public GameObject[] ratingTexts=new GameObject[4];
 
+	public Text turnText;
+	public float turnTextTimer=0;
+	bool firstTurn=true;
+
+	public Text rankingText;
+
     // Use this for initialization
     void Start () {
 		sc=this;
@@ -49,9 +55,20 @@ public class ShoutController : MonoBehaviour {
         if (!Menu.instance.gameIsRunning) {
             return;
         }
-		if (!shoutingPhase && ((currentCharacter==0) || playerRated)){
-			
 
+		turnTextTimer-=Time.deltaTime;
+		if (turnTextTimer<=0){
+			turnText.enabled=false;
+			turnText.gameObject.GetComponent<Animator>().enabled=false;
+		}
+
+		if (firstTurn){
+			firstTurn=false;
+
+			ShowTurn();
+		}
+
+		if (!shoutingPhase && ((currentCharacter==0) || playerRated)){
 			nextRoundTimer+=Time.deltaTime;
 			if (nextRoundTimer>=nextRoundTime){
 
@@ -61,9 +78,19 @@ public class ShoutController : MonoBehaviour {
 
 				scores[currentCharacter]=AvgRating();
 
-				if (played.Count<5)
+				string s="Ranking:\n\n";
+				for(int i=0; i<5; i++){
+					if (scores[i]!=0)
+						s+=GameData.IntToCharacterName(i)+": "+Mathf.Round(scores[i]*10)/10+"\n";
+				}
+				rankingText.text=s;
+
+
+				if (played.Count<5){
 					ChooseCharacter();
-				else{
+
+					ShowTurn();
+				}else{
 					ChooseWinner();
 				}
 			}
@@ -98,6 +125,7 @@ public class ShoutController : MonoBehaviour {
 			currentCharacter=Random.Range(0,5);
 		}while(played.Contains(currentCharacter));
 		played.Add(currentCharacter);
+
 
 		shoutingPhase=true;
 		shouter.enabled=true;
@@ -202,5 +230,16 @@ public class ShoutController : MonoBehaviour {
 		for(int i=0; i<4; i++){
 			ratingTexts[i].GetComponent<Text>().text="";
 		}
+	}
+
+	void ShowTurn(){
+		turnText.enabled=true;
+		turnText.gameObject.GetComponent<Animator>().enabled=true;
+		turnText.gameObject.GetComponent<Animator>().Play("TextSlide");
+		if (currentCharacter==0)
+			turnText.text="Your turn!";
+		else
+			turnText.text=GameData.IntToCharacterName(currentCharacter)+"'s turn!";
+		turnTextTimer=2;
 	}
 }
