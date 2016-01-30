@@ -16,6 +16,9 @@ public class ShoutController : MonoBehaviour {
 
 
 	public int[] ratings= new int[4];
+	public float[] scores=new float[5];
+	public int winner=-1;
+
 	public float sympathy=10;
 
 	public float maxStrength=40;
@@ -40,11 +43,38 @@ public class ShoutController : MonoBehaviour {
 				nextRoundTimer=0;
 				playerRated=false;
 
+				scores[currentCharacter]=AvgRating();
+
 				if (played.Count<5)
 					ChooseCharacter();
+				else{
+					ChooseWinner();
+				}
 			}
 		}
 	}
+
+	float AvgRating(){
+		float avg=0;
+
+		for (int i=0; i<4; i++){
+			avg+=ratings[i];
+		}
+		avg/=4;
+
+		return avg;
+	}
+
+	void ChooseWinner(){
+		float winnerScore=0;
+		for(int i=0; i<5; i++){
+			if (scores[i]>winnerScore){
+				winnerScore=scores[i];
+				winner=i;
+			}
+		}
+	}
+
 
 	public void ChooseCharacter(){
 		do{
@@ -55,6 +85,8 @@ public class ShoutController : MonoBehaviour {
 		shoutingPhase=true;
 		shouter.enabled=true;
 		shouter.character=currentCharacter;
+		ratingText.text="";
+	
 	}
 
 	public void RatingPhase(float strength){
@@ -73,10 +105,12 @@ public class ShoutController : MonoBehaviour {
 			ratings[0]=0;
 		}
 
+
 		for (int i=start; i<4; i++){
 			rating=(strength/maxStrength)*10-Random.value*(10-sympathy);
 			rating=Mathf.Clamp(rating,0,10);
 			ratings[i]=(int)rating+1;
+
 
 			text+=ratings[i]+" ";
 		}
