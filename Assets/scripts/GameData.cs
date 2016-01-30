@@ -21,19 +21,14 @@ public class GameData : MonoBehaviour {
 		switch(i){
 		case 0:
 			return "Steph";
-			break;
 		case 1:
 			return "Alex";
-			break;
 		case 2:
 			return "Jerry";
-			break;
 		case 3:
 			return "Lucy";
-			break;
 		case 4:
 			return "Nicky";
-			break;
 		}
 		return "";
 	}

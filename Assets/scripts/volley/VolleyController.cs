@@ -25,6 +25,10 @@ public class VolleyController : MonoBehaviour {
 
 	public bool cheated=false;
 
+	public Text versusText;
+	public float versusTextTimer=0;
+	bool firstMatch=true;
+
 	// Use this for initialization
 	void Start () {
 		vc=this;
@@ -35,9 +39,17 @@ public class VolleyController : MonoBehaviour {
 		if (!Menu.instance.gameIsRunning)
 			return;
 
+		versusTextTimer-=Time.deltaTime;
+		if (versusTextTimer<=0){
+			versusText.enabled=false;
+			versusText.gameObject.GetComponent<Animator>().enabled=false;
+		}
+
 		if (!firstBall){
 			ball.Restart();
 			firstBall=true;
+
+			ShowVersus();
 		}
 
 
@@ -84,6 +96,7 @@ public class VolleyController : MonoBehaviour {
 
 		scorePlayer=0;
 		scoreEnemy=0;
+		ShowVersus();
 	}
 
 	void GameOver(){
@@ -100,5 +113,13 @@ public class VolleyController : MonoBehaviour {
 		}
 
 		Menu.instance.EndGame(finalWinner,cheated);
+	}
+
+	void ShowVersus(){
+		versusTextTimer=2;
+		versusText.enabled=true;
+		versusText.gameObject.GetComponent<Animator>().enabled=true;
+		versusText.gameObject.GetComponent<Animator>().Play("TextSlide");
+		versusText.text="Steph vs "+GameData.IntToCharacterName(opponent);
 	}
 }

@@ -26,12 +26,35 @@ public class EatContestant : MonoBehaviour {
     private static int EAT = Animator.StringToHash("eat");
     private static int WIN = Animator.StringToHash("win");
 
+	public Sprite idle,eat,freeze,brocoli;
+	public SpriteRenderer sprr;
+	float eating=0;
+
+
+	public Sprite halfEmptyBowl, almostEmptyBowl;
+	public SpriteRenderer bowlSprr;
+
     void Awake() {
         eat_o_meter = transform.FindChild("Eat-o-meter").gameObject;
         bowl = transform.FindChild("Bowl").gameObject;
         persona = transform.FindChild("Persona").gameObject;
+
+		sprr=persona.GetComponent<SpriteRenderer>();
+		bowlSprr=bowl.GetComponent<SpriteRenderer>();
     }
     void Update () {
+		if (brainfreeze)
+			sprr.sprite=freeze;
+		else if (broccoli)
+			sprr.sprite=brocoli;
+		else if (eating>0)
+			sprr.sprite=eat;
+		else
+			sprr.sprite=idle;
+
+		eating-=Time.deltaTime;
+
+
         if (!Menu.instance.gameIsRunning) {
             return;
         }
@@ -41,7 +64,7 @@ public class EatContestant : MonoBehaviour {
             }
             DecreaseBrainfreezeThreatLevel();
         }
-        eat_o_meter.transform.localScale = new Vector3(1,brainfreezeThreatLevel*10,1);
+		eat_o_meter.transform.localScale = new Vector3((1-brainfreezeThreatLevel)*0.3577419f,0.5864619f,1);
 	}
     public bool Eat() {
         if (brainfreeze) {
@@ -52,11 +75,21 @@ public class EatContestant : MonoBehaviour {
             Log("broccoli! cant eat");
             return false;
         }
+
+		eating=0.2f;
+
         brainfreezeThreatLevel += increase * Time.deltaTime;
         eatingscore += 1;
         if (eatingscore % bitesPerPiece == 0) {
             bowlFillAmount -= 1;
         }
+
+		if (bowlFillAmount<=5)
+			bowlSprr.sprite=halfEmptyBowl;
+
+		if (bowlFillAmount<=2)
+			bowlSprr.sprite=almostEmptyBowl;
+
         if (bowlFillAmount <= 0) {
             Log("i win!");
             // TODO play win animation
@@ -65,13 +98,13 @@ public class EatContestant : MonoBehaviour {
         if (brainfreezeThreatLevel > upperBoundary) {
             Log("brainfreeze!");
             probability -= 0.1f; // for ai t prevent future freezes
-            persona.GetComponent<Animator>().SetTrigger(FREEZE);
+            //persona.GetComponent<Animator>().SetTrigger(FREEZE);
             brainfreeze = true;
             StartCoroutine(RemoveBrainfreezeAfter(2f));
             return true;
         }
-        persona.GetComponent<Animator>().SetTrigger(EAT);
-        return true;
+        //persona.GetComponent<Animator>().SetTrigger(EAT);
+		return true;
     }
     private void DecreaseBrainfreezeThreatLevel() {
         brainfreezeThreatLevel -= (brainfreezeThreatLevel/10 + decrease) * Time.deltaTime;
@@ -86,7 +119,7 @@ public class EatContestant : MonoBehaviour {
     public void Broccoli() {
         broccoli = true;
         Log("broccoli-attack!");
-        persona.GetComponent<Animator>().SetTrigger(FREEZE);
+        //persona.GetComponent<Animator>().SetTrigger(FREEZE);
         StartCoroutine(RemoveBroccoliAfter(2f));
     }
     public IEnumerator RemoveBroccoliAfter(float seconds) {
