@@ -41,16 +41,24 @@ public class Ball : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D c){
 		if (c.gameObject.GetComponent<Character>()){
 			r.AddForce((transform.position-c.transform.position+Vector3.up*2)*200);
+
+			if (!GetComponent<AudioSource>().isPlaying){
+				GetComponent<AudioSource>().Play();
+			}
 		}
 	}
 
 	void Bounce(float x,float y){
 		r.AddForce(new Vector2(x*bounce,y*bounce));
+
+		if (!GetComponent<AudioSource>().isPlaying){
+			GetComponent<AudioSource>().Play();
+		}
 	}
 
 	public void Restart(){
 		transform.position=startPos;
-		r.velocity=new Vector2(Random.value-1+2, Random.value+3);
+		r.velocity=new Vector2(Random.value-2+1, Random.value+3);
 		r.isKinematic=false;
 	}
 		

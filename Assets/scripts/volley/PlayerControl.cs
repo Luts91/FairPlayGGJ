@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void Start(){
 		c=	GetComponent<Character>();
+		c.name="Steph";
 	}
 
 	// Update is called once per frame
