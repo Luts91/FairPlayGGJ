@@ -38,7 +38,7 @@ public class EatingGameLogic : MonoBehaviour {
 
             // counterattack 
             if (UnityEngine.Random.Range(0f, 1f) < attackCount / 10) {
-                player.Broccoli();
+                Broccoli.instance.ThrowBroccoli(leader, player);
             }
 
         }
@@ -46,7 +46,7 @@ public class EatingGameLogic : MonoBehaviour {
             if (lastAttack == 0f || lastAttack < Time.realtimeSinceStartup - attackCooldown) {
                 // sabotage
                 lastAttack = Time.realtimeSinceStartup; // for cooldown
-                leader.Broccoli();
+                Broccoli.instance.ThrowBroccoli(player, leader);
                 attackCount += 1;
             } else {
                 Debug.Log("attack is on cooldown");
