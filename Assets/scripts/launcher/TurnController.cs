@@ -37,20 +37,18 @@ public class TurnController : MonoBehaviour {
 		if (!Menu.instance.gameIsRunning)
 			return;
 
-		if (firstTurn){
-			firstTurn=false;
-			turnText.enabled=true;
-			if (currentTurn==0)
-				turnText.text=("Your turn!");
-			else
-				turnText.text=(GameData.IntToCharacterName(currentTurn)+"'s turn!");
-			turnTextTime=2;
-		}
-
 
 		turnTextTime-=Time.deltaTime;
-		if (turnTextTime<=0)
+		if (turnTextTime<=0){
 			turnText.enabled=false;
+			turnText.gameObject.GetComponent<Animator>().enabled=false;
+		}
+
+		if (firstTurn){
+			firstTurn=false;
+			ShowTurn();
+		}
+
 
 		if (nextTurn){
 			nextTurnTimer+=Time.deltaTime;
@@ -81,13 +79,7 @@ public class TurnController : MonoBehaviour {
 			do{
 				currentTurn=Random.Range(0,5);
 			}while(turns.Contains(currentTurn));
-
-			turnText.enabled=true;
-			if (currentTurn==0)
-				turnText.text=("Your turn!");
-			else
-				turnText.text=(GameData.IntToCharacterName(currentTurn)+"'s turn!");
-			turnTextTime=2;
+			ShowTurn();
 
 		}else{
 			GetWinner();
@@ -105,5 +97,15 @@ public class TurnController : MonoBehaviour {
 		Menu.instance.EndGame(winner,cheated);
 	}
 
+	void ShowTurn(){
+		turnText.enabled=true;
+		turnText.gameObject.GetComponent<Animator>().enabled=true;
+		turnText.gameObject.GetComponent<Animator>().Play("TextSlide");
+		if (currentTurn==0)
+			turnText.text=("Your turn!");
+		else
+			turnText.text=(GameData.IntToCharacterName(currentTurn)+"'s turn!");
+		turnTextTime=2;
+	}
 
 }
