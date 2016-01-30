@@ -83,8 +83,6 @@ public class TurnController : MonoBehaviour {
 
 		if (turns.Count<5){
 			ra.enabled=true;
-			stick.Restart();
-			sabotager.Restart();
 			do{
 				currentTurn=Random.Range(0,5);
 			}while(turns.Contains(currentTurn));
@@ -96,6 +94,8 @@ public class TurnController : MonoBehaviour {
 			else
 				sabotagerSprr.sprite=antiSpr[0];
 
+			stick.Restart();
+			sabotager.Restart();
 			ShowTurn();
 
 		}else{

@@ -17,6 +17,8 @@ public class Stick : MonoBehaviour {
 		r=GetComponent<Rigidbody2D>();
 		startPos=transform.position;
 		startRot=r.rotation;
+		if (TurnController.tc.currentTurn==3)
+			transform.position=new Vector3(transform.position.x,transform.position.y-0.7f,transform.position.z);
 	}
 	
 	// Update is called once per frame
@@ -38,6 +40,9 @@ public class Stick : MonoBehaviour {
 		r.rotation=startRot;
 		r.gravityScale=0;
 		r.velocity=Vector2.zero;
+
+		if (TurnController.tc.currentTurn==3)
+			transform.position=new Vector3(transform.position.x,transform.position.y-0.7f,transform.position.z);
 	}
 
 	void OnCollisionEnter2D(Collision2D c){
