@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class EatingGameLogic : MonoBehaviour {
     public static EatingGameLogic instance;
 
-    public EatContestant player;
-    public EatContestant ai1;
-    public EatContestant ai2;
-    public EatContestant ai3;
-    public EatContestant ai4;
+    public EatContestant steph;
+    public EatContestant alex;
+    public EatContestant jerry;
+    public EatContestant lucy;
+    public EatContestant nicky;
 
     public List<EatContestant> eatContestants = new List<EatContestant>();
     private float lastAttack = 0f;
@@ -20,11 +20,11 @@ public class EatingGameLogic : MonoBehaviour {
 
     void Awake() {
         instance = this;
-        eatContestants.Add(player);
-        eatContestants.Add(ai1);
-        eatContestants.Add(ai2);
-        eatContestants.Add(ai3);
-        eatContestants.Add(ai4);
+        eatContestants.Add(steph);
+        eatContestants.Add(alex);
+        eatContestants.Add(jerry);
+        eatContestants.Add(lucy);
+        eatContestants.Add(nicky);
         audiosources = GetComponents<AudioSource>();
     }
 
@@ -45,13 +45,13 @@ public class EatingGameLogic : MonoBehaviour {
 
         if (Input.GetButtonDown("Fire1")) {
             // take a bite
-            player.Eat();
+            steph.Eat();
 
             // counterattack 
             double probabilityOfCounterattack = Math.Sin(Math.Min(1f, attackCount / 10f) * Math.PI / 2) / 2;
             Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
             if (UnityEngine.Random.Range(0f, 1f) < probabilityOfCounterattack) {
-                Broccoli.instance.ThrowBroccoli(leader, player);
+                Broccoli.instance.ThrowBroccoli(leader, steph);
             }
 
         }
@@ -59,7 +59,7 @@ public class EatingGameLogic : MonoBehaviour {
             if (lastAttack == 0f || lastAttack < Time.realtimeSinceStartup - attackCooldown) {
                 // sabotage
                 lastAttack = Time.realtimeSinceStartup; // for cooldown
-                Broccoli.instance.ThrowBroccoli(player, leader);
+                Broccoli.instance.ThrowBroccoli(steph, leader);
                 attackCount += 1;
             } else {
                 Debug.Log("attack is on cooldown");
@@ -67,26 +67,26 @@ public class EatingGameLogic : MonoBehaviour {
 
         }
         // check for a winner
-        foreach (EatContestant ec in eatContestants) {
+        for (int i = 0; i < eatContestants.Count; i++) {
+            EatContestant ec = eatContestants[i];
             if (ec.bowlFillAmount <= 0) {
-                Menu.instance.EndGame(0, (attackCount > 0));
+                Menu.instance.EndGame(i, (attackCount > 0));
                 StopBackgroundSound();
-                // TODO change to int!!!!!!!!!!!!11111111111111111
                 return;
             }
         }
     }
 
     private EatContestant GetLeadingOpponent() {
-        EatContestant leader = ai1;
-        if (ai2.eatingscore > leader.eatingscore) {
-            leader = ai2;
+        EatContestant leader = alex;
+        if (jerry.eatingscore > leader.eatingscore) {
+            leader = jerry;
         }
-        if (ai3.eatingscore > leader.eatingscore) {
-            leader = ai3;
+        if (lucy.eatingscore > leader.eatingscore) {
+            leader = lucy;
         }
-        if (ai4.eatingscore > leader.eatingscore) {
-            leader = ai4;
+        if (nicky.eatingscore > leader.eatingscore) {
+            leader = nicky;
         }
         return leader;
     }
