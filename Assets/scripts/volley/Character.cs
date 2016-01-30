@@ -12,8 +12,6 @@ public class Character : MonoBehaviour {
 
 	public float startX;
 
-	public string name;
-
 	Animator a;
 
 	// Use this for initialization
