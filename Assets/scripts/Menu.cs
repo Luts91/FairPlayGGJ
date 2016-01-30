@@ -52,10 +52,7 @@ public class Menu : MonoBehaviour {
     }
 
     public void BackToMain() {
-        GameData.instance.winners = new string[5];
-        GameData.instance.cheated = new bool[5];
+        GameData.instance.Reset();
         SceneManager.LoadScene(0);
-        gameIsRunning = false;
-        endPanel.SetActive(true);
     }
 }
