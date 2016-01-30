@@ -75,12 +75,6 @@ public class EatingGameLogic : MonoBehaviour {
 
     public void StartContest() {
         gameIsRunning = true;
-        startPanel.SetActive(false);
-        endPanel.SetActive(false);
-    }
-
-    public void NextGame() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private EatContestant GetLeadingOpponent() {
