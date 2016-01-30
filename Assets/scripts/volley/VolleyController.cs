@@ -45,7 +45,7 @@ public class VolleyController : MonoBehaviour {
 		if (scoreEnemy>=3)
 			winner=1;
 
-		t.text=scorePlayer+" : "+scoreEnemy;
+		t.text=scorePlayer+":"+scoreEnemy;
 
 		nextRoundTimer=2;
 
