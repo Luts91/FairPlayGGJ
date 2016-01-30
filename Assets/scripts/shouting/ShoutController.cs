@@ -43,6 +43,7 @@ public class ShoutController : MonoBehaviour {
 
 	public Text rankingText;
 
+
     // Use this for initialization
     void Start () {
 		sc=this;
@@ -116,6 +117,7 @@ public class ShoutController : MonoBehaviour {
 				winner=i;
 			}
 		}
+			
 		Menu.instance.EndGame(winner, cheated);
 	}
 

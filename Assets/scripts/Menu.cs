@@ -13,6 +13,8 @@ public class Menu : MonoBehaviour {
     bool gameIsPaused = false;
     public bool gameIsRunning = false;
 
+	public UnityEngine.UI.Text winnerText;
+
     void Awake() {
         instance = this;
         startPanel.SetActive(true);
@@ -47,6 +49,9 @@ public class Menu : MonoBehaviour {
     public void EndGame(int winner, bool cheated) {
         gameIsRunning = false;
         endPanel.SetActive(true);
+
+		winnerText.text=GameData.IntToCharacterName(winner)+" wins!";
+
         GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = winner;
         GameData.instance.cheated[SceneManager.GetActiveScene().buildIndex - 1] = cheated;
     }

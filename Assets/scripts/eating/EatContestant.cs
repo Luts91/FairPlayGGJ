@@ -62,17 +62,16 @@ public class EatContestant : MonoBehaviour {
             if (!isPlayer && UnityEngine.Random.Range(0f, 1f) < probability * Time.deltaTime && brainfreezeThreatLevel < upperBoundary) {
                 Eat();
             }
-            DecreaseBrainfreezeThreatLevel();
         }
+
+		DecreaseBrainfreezeThreatLevel();
 		eat_o_meter.transform.localScale = new Vector3((1-brainfreezeThreatLevel)*0.3577419f,0.5864619f,1);
 	}
     public bool Eat() {
         if (brainfreeze) {
-            Log("brainfozen! cant eat");
             return false;
         }
         if (broccoli) {
-            Log("broccoli! cant eat");
             return false;
         }
 
@@ -91,12 +90,10 @@ public class EatContestant : MonoBehaviour {
 			bowlSprr.sprite=almostEmptyBowl;
 
         if (bowlFillAmount <= 0) {
-            Log("i win!");
-            // TODO play win animation
+            
             return true;
         }
         if (brainfreezeThreatLevel > upperBoundary) {
-            Log("brainfreeze!");
             probability -= 0.1f; // for ai t prevent future freezes
             //persona.GetComponent<Animator>().SetTrigger(FREEZE);
             brainfreeze = true;
@@ -114,11 +111,9 @@ public class EatContestant : MonoBehaviour {
     }
     public void Defreeze() {
         brainfreeze = false;
-        Log("brainfreeze ended");
     }
     public void Broccoli() {
         broccoli = true;
-        Log("broccoli-attack!");
         //persona.GetComponent<Animator>().SetTrigger(FREEZE);
         StartCoroutine(RemoveBroccoliAfter(2f));
     }
