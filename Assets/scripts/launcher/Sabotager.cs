@@ -13,6 +13,7 @@ public class Sabotager : MonoBehaviour {
 	Rigidbody2D r;
 
 	public float canThrow=1;
+	public GameObject waterSplash;
 
 
 	// Use this for initialization
@@ -46,8 +47,16 @@ public class Sabotager : MonoBehaviour {
 
 	void Throw(){
 		if (!thrown){
+			r.isKinematic=false;
+
 			r.velocity=(stick.transform.position-transform.position).normalized*strength;
 			thrown=true;
+
+			if (TurnController.tc.currentTurn==0){
+				TurnController.tc.sabotagerSprr.sprite=TurnController.tc.throwSpr[1];
+			}else{
+				TurnController.tc.sabotagerSprr.sprite=TurnController.tc.throwSpr[0];
+			}
 		}
 	}
 
@@ -55,5 +64,14 @@ public class Sabotager : MonoBehaviour {
 		transform.position=startPos;
 		r.velocity=Vector2.zero;
 		thrown=false;
+
+		r.isKinematic=true;
+	}
+
+	void OnCollisionEnter2D(Collision2D c){
+		if (c.gameObject.GetComponent<Stick>())
+			return;
+
+		Instantiate(waterSplash,transform.position,Quaternion.identity);
 	}
 }

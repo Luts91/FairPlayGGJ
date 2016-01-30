@@ -26,10 +26,19 @@ public class TurnController : MonoBehaviour {
 	public Text rankingText;
 
 	public static TurnController tc;
+
+	public Sprite[] antiSpr=new Sprite[5],throwSpr=new Sprite[5];
+	public SpriteRenderer throwerSprr,sabotagerSprr;
+
 	// Use this for initialization
 	void Start () {
 		tc=this;
 		currentTurn=Random.Range(0,5);
+		throwerSprr.sprite=antiSpr[currentTurn];
+		if (currentTurn==0)
+			sabotagerSprr.sprite=antiSpr[1];
+		else
+			sabotagerSprr.sprite=antiSpr[0];
 	}
 	
 	// Update is called once per frame
@@ -79,6 +88,14 @@ public class TurnController : MonoBehaviour {
 			do{
 				currentTurn=Random.Range(0,5);
 			}while(turns.Contains(currentTurn));
+
+			throwerSprr.sprite=antiSpr[currentTurn];
+
+			if (currentTurn==0)
+				sabotagerSprr.sprite=antiSpr[1];
+			else
+				sabotagerSprr.sprite=antiSpr[0];
+
 			ShowTurn();
 
 		}else{

@@ -51,5 +51,7 @@ public class SetStrength : MonoBehaviour {
 		stick.Throw();
 		this.enabled=false;
 		transform.localScale=new Vector2(1,1);
+
+		TurnController.tc.throwerSprr.sprite=TurnController.tc.throwSpr[TurnController.tc.currentTurn];
 	}
 }

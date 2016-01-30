@@ -10,6 +10,8 @@ public class Stick : MonoBehaviour {
 	public Vector3 startPos;
 	public float startRot;
 
+	public GameObject waterSplash;
+
 	// Use this for initialization
 	void Start () {
 		r=GetComponent<Rigidbody2D>();
@@ -44,5 +46,7 @@ public class Stick : MonoBehaviour {
 
 		range=transform.position.x+9;
 		TurnController.tc.nextTurn=true;
+
+		Instantiate(waterSplash,transform.position,Quaternion.identity);
 	}
 }
