@@ -12,8 +12,6 @@ public class ShoutController : MonoBehaviour {
 
 	public bool shoutingPhase=true;
 
-	public Text ratingText;
-
 
 	public int[] ratings= new int[4];
 	public float[] scores=new float[5];
@@ -104,7 +102,6 @@ public class ShoutController : MonoBehaviour {
 		shoutingPhase=true;
 		shouter.enabled=true;
 		shouter.character=currentCharacter;
-		ratingText.text="";
 	
 		player.sprite=spritesShout[currentCharacter];
 
@@ -147,8 +144,6 @@ public class ShoutController : MonoBehaviour {
 			if (currentCharacter==jury)
 				jury++;
 			jurys[i].sprite=spritesRate[jury];
-
-			Rect rect=ratingTexts[i].GetComponent<RectTransform>().rect;
 
 			float y=0;
 			switch(jury){
