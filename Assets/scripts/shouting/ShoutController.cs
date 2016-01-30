@@ -87,9 +87,9 @@ public class ShoutController : MonoBehaviour {
 			if (scores[i]>winnerScore){
 				winnerScore=scores[i];
 				winner=i;
-                Menu.instance.EndGame("name of winner", cheated);
 			}
 		}
+		Menu.instance.EndGame(winner, cheated);
 	}
 
 

@@ -44,7 +44,7 @@ public class Menu : MonoBehaviour {
         Time.timeScale = gameIsPaused ? 0 : 1;
     }
 
-    public void EndGame(string winner, bool cheated) {
+    public void EndGame(int winner, bool cheated) {
         gameIsRunning = false;
         endPanel.SetActive(true);
         GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = winner;

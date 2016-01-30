@@ -68,8 +68,8 @@ public class EatingGameLogic : MonoBehaviour {
         }
         // check for a winner
         foreach (EatContestant ec in eatContestants) {
-            if (ec.bowlFillAmount <= 0) {
-                Menu.instance.EndGame(ec.name, (attackCount > 0));
+            if (ec.bowlFillAmount <= 0) { //@TODO Winner
+                Menu.instance.EndGame(0, (attackCount > 0));
                 StopBackgroundSound();
                 // TODO change to real name
                 return;

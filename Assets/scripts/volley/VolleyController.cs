@@ -99,6 +99,6 @@ public class VolleyController : MonoBehaviour {
 			}
 		}
 
-		Menu.instance.EndGame("",cheated);
+		Menu.instance.EndGame(finalWinner,cheated);
 	}
 }

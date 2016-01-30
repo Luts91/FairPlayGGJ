@@ -66,7 +66,7 @@ public class TurnController : MonoBehaviour {
 			}
 		}
 
-		Menu.instance.EndGame("",cheated);
+		Menu.instance.EndGame(winner,cheated);
 	}
 
 
