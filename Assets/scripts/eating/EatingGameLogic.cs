@@ -45,13 +45,14 @@ public class EatingGameLogic : MonoBehaviour {
 
         if (Input.GetButtonDown("Fire1")) {
             // take a bite
-            steph.Eat();
-
-            // counterattack 
-            double probabilityOfCounterattack = Math.Sin(Math.Min(1f, attackCount / 10f) * Math.PI / 2) / 2;
-            Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
-            if (UnityEngine.Random.Range(0f, 1f) < probabilityOfCounterattack) {
-                Broccoli.instance.ThrowBroccoli(leader, steph);
+            bool success = steph.Eat();
+            if (success) {
+                // counterattack 
+                double probabilityOfCounterattack = Math.Sin(Math.Min(1f, attackCount / 10f) * Math.PI / 2) / 2;
+                Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
+                if (UnityEngine.Random.Range(0f, 1f) < probabilityOfCounterattack) {
+                    Broccoli.instance.ThrowBroccoli(leader, steph);
+                }
             }
 
         }
