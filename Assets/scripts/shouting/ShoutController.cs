@@ -28,15 +28,19 @@ public class ShoutController : MonoBehaviour {
 	bool playerRated=false;
 
 	public float nextRoundTimer=0,nextRoundTime=4;
+    public bool cheated = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		sc=this;
 		ChooseCharacter();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (!Menu.instance.gameIsRunning) {
+            return;
+        }
 		if (!shoutingPhase && ((currentCharacter==0) || playerRated)){
 			nextRoundTimer+=Time.deltaTime;
 			if (nextRoundTimer>=nextRoundTime){
@@ -71,6 +75,7 @@ public class ShoutController : MonoBehaviour {
 			if (scores[i]>winnerScore){
 				winnerScore=scores[i];
 				winner=i;
+                Menu.instance.EndGame("name of winner", cheated);
 			}
 		}
 	}
@@ -122,6 +127,10 @@ public class ShoutController : MonoBehaviour {
 		playerRatingSelection.SetActive(false);
 		ratings[0]=rating;
 		playerRated=true;
+        if (rating < 2) {
+            // y u rate so low, asshole?
+            cheated = true;
+        }
 
 		ratingText.text=ratings[0]+" "+ratings[1]+" "+ratings[2]+" "+ratings[3];
 	}

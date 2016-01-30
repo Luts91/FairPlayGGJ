@@ -17,6 +17,9 @@ public class Shout : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!Menu.instance.gameIsRunning) {
+            return;
+        }
 		if (character==0){
 			if (Input.GetMouseButtonDown(0)){
 				strength+=1;
