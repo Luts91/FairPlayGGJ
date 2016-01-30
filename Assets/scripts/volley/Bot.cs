@@ -39,7 +39,7 @@ public class Bot : MonoBehaviour {
 
 	void AIUpdate(){
 		if (ball.position.x>0){
-			moveX=ball.position.x-transform.position.x;
+			moveX=ball.position.x-transform.position.x+1;
 			GetComponent<Character>().Jump();
 		}else{
 			moveX=0;
