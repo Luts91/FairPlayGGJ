@@ -4,21 +4,24 @@ using System.Collections;
 using System;
 
 public class Menu : MonoBehaviour {
+    public static Menu instance;
 
     public GameObject startPanel;
     public GameObject endPanel;
     public GameObject pausePanel;
 
-    bool paused = false;
+    bool gameIsPaused = false;
+    public bool gameIsRunning = false;
 
     void Awake() {
+        instance = this;
         startPanel.SetActive(true);
         endPanel.SetActive(false);
         pausePanel.SetActive(false);
     }
 
     void Update () {
-        if (Input.GetButtonDown("Cancel")) {
+        if ((gameIsRunning || gameIsPaused) && Input.GetButtonDown("Cancel")) {
             TogglePause();
         }
     }
@@ -26,6 +29,7 @@ public class Menu : MonoBehaviour {
     public void StartGame() {
         startPanel.SetActive(false);
         endPanel.SetActive(false);
+        gameIsRunning = true;
     }
 
     public void NextGame() {
@@ -34,8 +38,16 @@ public class Menu : MonoBehaviour {
 
 
     public void TogglePause() {
-        paused = !paused;
-        pausePanel.SetActive(paused);
-        Time.timeScale = paused ? 0 : 1;
+        gameIsPaused = !gameIsPaused;
+        gameIsRunning = !gameIsPaused;
+        pausePanel.SetActive(gameIsPaused);
+        Time.timeScale = gameIsPaused ? 0 : 1;
+    }
+
+    public void EndGame(string winner, bool cheated) {
+        gameIsRunning = false;
+        endPanel.SetActive(true);
+        GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = winner;
+        GameData.instance.cheated[SceneManager.GetActiveScene().buildIndex - 1] = cheated;
     }
 }

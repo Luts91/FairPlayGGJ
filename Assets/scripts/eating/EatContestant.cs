@@ -32,13 +32,14 @@ public class EatContestant : MonoBehaviour {
         persona = transform.FindChild("Persona").gameObject;
     }
     void Update () {
-        if (EatingGameLogic.instance.gameIsRunning) {
-	        if (!brainfreeze && !broccoli && !isPlayer && UnityEngine.Random.Range(0f, 1f) < probability*Time.deltaTime) {
-                Eat();
-            }
-            DecreaseBrainfreezeThreatLevel();
-            eat_o_meter.transform.localScale = new Vector3(1,brainfreezeThreatLevel*10,1);
+        if (!Menu.instance.gameIsRunning) {
+            return;
         }
+	    if (!brainfreeze && !broccoli && !isPlayer && UnityEngine.Random.Range(0f, 1f) < probability*Time.deltaTime) {
+            Eat();
+        }
+        DecreaseBrainfreezeThreatLevel();
+        eat_o_meter.transform.localScale = new Vector3(1,brainfreezeThreatLevel*10,1);
 	}
     public void Eat() {
         if (brainfreeze) {

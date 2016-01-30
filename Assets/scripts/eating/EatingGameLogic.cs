@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 public class EatingGameLogic : MonoBehaviour {
     public static EatingGameLogic instance;
 
-    public GameObject startPanel;
-    public GameObject endPanel;
-
-    public bool gameIsRunning = false;
-
     public EatContestant player;
     public EatContestant ai1;
     public EatContestant ai2;
@@ -24,8 +19,6 @@ public class EatingGameLogic : MonoBehaviour {
 
     void Awake() {
         instance = this;
-        startPanel.SetActive(true);
-        endPanel.SetActive(false);
         eatContestants.Add(player);
         eatContestants.Add(ai1);
         eatContestants.Add(ai2);
@@ -34,47 +27,40 @@ public class EatingGameLogic : MonoBehaviour {
     }
 
     void Update() {
-        if (gameIsRunning) {
-            EatContestant leader = GetLeadingOpponent();
+        if (!Menu.instance.gameIsRunning) {
+            return;
+        }
+        EatContestant leader = GetLeadingOpponent();
 
-            if (Input.GetButtonDown("Fire1")) {
-                // take a bite
-                player.Eat();
+        if (Input.GetButtonDown("Fire1")) {
+            // take a bite
+            player.Eat();
 
-                // counterattack 
-                if (UnityEngine.Random.Range(0f, 1f) < attackCount / 10) {
-                    player.Broccoli();
-                }
-
+            // counterattack 
+            if (UnityEngine.Random.Range(0f, 1f) < attackCount / 10) {
+                player.Broccoli();
             }
-            if (Input.GetButtonDown("Fire2")) {
-                if (lastAttack == 0f || lastAttack < Time.realtimeSinceStartup - attackCooldown) {
-                    // sabotage
-                    lastAttack = Time.realtimeSinceStartup; // for cooldown
-                    leader.Broccoli();
-                    attackCount += 1;
-                } else {
-                    Debug.Log("attack is on cooldown");
-                }
 
+        }
+        if (Input.GetButtonDown("Fire2")) {
+            if (lastAttack == 0f || lastAttack < Time.realtimeSinceStartup - attackCooldown) {
+                // sabotage
+                lastAttack = Time.realtimeSinceStartup; // for cooldown
+                leader.Broccoli();
+                attackCount += 1;
+            } else {
+                Debug.Log("attack is on cooldown");
             }
-            // check for a winner
-            foreach (EatContestant ec in eatContestants) {
-                if (ec.bowlFillAmount <= 0) {
-                    // we have a winner
-                    gameIsRunning = false;
-                    // set name of the winnner etc
-                    endPanel.SetActive(true);
-                    GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = ec.name; // TODO change to real name
-                    GameData.instance.cheated[SceneManager.GetActiveScene().buildIndex - 1] = (attackCount > 0);
-                    return;
-                }
+
+        }
+        // check for a winner
+        foreach (EatContestant ec in eatContestants) {
+            if (ec.bowlFillAmount <= 0) {
+                Menu.instance.EndGame(ec.name, (attackCount > 0));
+                // TODO change to real name
+                return;
             }
         }
-    }
-
-    public void StartContest() {
-        gameIsRunning = true;
     }
 
     private EatContestant GetLeadingOpponent() {
