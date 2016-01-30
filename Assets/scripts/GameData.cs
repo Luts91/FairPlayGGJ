@@ -4,8 +4,8 @@ using System.Collections;
 public class GameData : MonoBehaviour {
     public static GameData instance;
 
-    public string[] winners = new string[5];
-    public bool[] cheated = new bool[5];
+    public string[] winners = new string[4];
+    public bool[] cheated = new bool[4];
 
     void Awake() {
         instance = this;
@@ -13,7 +13,7 @@ public class GameData : MonoBehaviour {
     }
 
     public void Reset() {
-        winners = new string[5];
-        cheated = new bool[5];
+        winners = new string[4];
+        cheated = new bool[4];
 }
 }

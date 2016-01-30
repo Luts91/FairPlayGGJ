@@ -16,6 +16,7 @@ public class EatingGameLogic : MonoBehaviour {
     private float lastAttack = 0f;
     private float attackCooldown = 3f;
     private int attackCount = 0;
+    private AudioSource[] audiosources;
 
     void Awake() {
         instance = this;
@@ -24,6 +25,16 @@ public class EatingGameLogic : MonoBehaviour {
         eatContestants.Add(ai2);
         eatContestants.Add(ai3);
         eatContestants.Add(ai4);
+        audiosources = GetComponents<AudioSource>();
+    }
+
+    public void StartBackgroundSound() {
+        audiosources[0].Play();
+        audiosources[1].Play();
+    }
+    public void StopBackgroundSound() {
+        audiosources[0].Stop();
+        audiosources[1].Stop();
     }
 
     void Update() {
@@ -59,6 +70,7 @@ public class EatingGameLogic : MonoBehaviour {
         foreach (EatContestant ec in eatContestants) {
             if (ec.bowlFillAmount <= 0) {
                 Menu.instance.EndGame(ec.name, (attackCount > 0));
+                StopBackgroundSound();
                 // TODO change to real name
                 return;
             }
