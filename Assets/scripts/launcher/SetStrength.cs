@@ -39,7 +39,7 @@ public class SetStrength : MonoBehaviour {
 			}
 		}
 
-		transform.localScale=new Vector3(1,20*strength,1);
+		transform.localScale=new Vector3(1,Mathf.Clamp(1-strength,0,1),1);
 	}
 		
 	void OnEnable(){
@@ -50,5 +50,6 @@ public class SetStrength : MonoBehaviour {
 		stick.strength=strength;
 		stick.Throw();
 		this.enabled=false;
+		transform.localScale=new Vector2(1,1);
 	}
 }
