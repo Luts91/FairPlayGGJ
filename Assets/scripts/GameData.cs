@@ -16,4 +16,25 @@ public class GameData : MonoBehaviour {
         winners = new int[4];
         cheated = new bool[4];
 	}
+
+	public static string IntToCharacterName(int i){
+		switch(i){
+		case 0:
+			return "Steph";
+			break;
+		case 1:
+			return "Alex";
+			break;
+		case 2:
+			return "Jerry";
+			break;
+		case 3:
+			return "Lucy";
+			break;
+		case 4:
+			return "Nicky";
+			break;
+		}
+		return "";
+	}
 }

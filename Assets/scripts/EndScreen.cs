@@ -10,10 +10,10 @@ public class EndScreen : MonoBehaviour {
 
     void Start () {
         winner.text = "And the winners are:";
-        winner.text += "\nShouting: " + GameData.instance.winners[0];
-        winner.text += "\nEating: " + GameData.instance.winners[1];
-        winner.text += "\nThrowing: " + GameData.instance.winners[2];
-        winner.text += "\nVolley: " + GameData.instance.winners[3];
+		winner.text += "\nShouting: " + GameData.IntToCharacterName(GameData.instance.winners[0]);
+		winner.text += "\nEating: " + GameData.IntToCharacterName(GameData.instance.winners[1]);
+		winner.text += "\nThrowing: " + GameData.IntToCharacterName(GameData.instance.winners[2]);
+		winner.text += "\nVolley: " + GameData.IntToCharacterName(GameData.instance.winners[3]);
 
         cheated.text = "You cheated in:";
         cheated.text += "\nShouting: " + GameData.instance.cheated[0];
