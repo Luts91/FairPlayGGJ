@@ -40,9 +40,9 @@ public class VolleyController : MonoBehaviour {
 		else
 			scorePlayer+=1;
 
-		if (scorePlayer>3)
+		if (scorePlayer>=3)
 			winner=0;
-		if (scoreEnemy>3)
+		if (scoreEnemy>=3)
 			winner=1;
 
 		t.text=scorePlayer+" : "+scoreEnemy;
