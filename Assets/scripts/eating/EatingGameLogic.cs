@@ -65,6 +65,9 @@ public class EatingGameLogic : MonoBehaviour {
                     gameIsRunning = false;
                     // set name of the winnner etc
                     endPanel.SetActive(true);
+                    GameData.instance.winners[SceneManager.GetActiveScene().buildIndex - 1] = ec.name; // TODO change to real name
+                    GameData.instance.cheated[SceneManager.GetActiveScene().buildIndex - 1] = (attackCount > 0);
+                    return;
                 }
             }
         }
@@ -77,7 +80,7 @@ public class EatingGameLogic : MonoBehaviour {
     }
 
     public void NextGame() {
-        SceneManager.LoadScene("wtf"); // TODO what is the next scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private EatContestant GetLeadingOpponent() {
