@@ -10,7 +10,12 @@ public class VolleyController : MonoBehaviour {
 
 	public int scorePlayer=0,scoreEnemy=0;
 
-	public int winner=-1;
+	public int winner=-1,finalWinner;
+
+
+	public int opponent=1;
+
+	public int[] scores=new int[5];
 
 	public Text t;
 
@@ -40,10 +45,14 @@ public class VolleyController : MonoBehaviour {
 		else
 			scorePlayer+=1;
 
-		if (scorePlayer>=3)
+		if (scorePlayer>=3){
 			winner=0;
-		if (scoreEnemy>=3)
-			winner=1;
+			NextMatch();
+		}
+		if (scoreEnemy>=3){
+			winner=opponent;
+			NextMatch();
+		}
 
 		t.text=scorePlayer+":"+scoreEnemy;
 
@@ -51,5 +60,31 @@ public class VolleyController : MonoBehaviour {
 
 		ball.enabled=false;
 
+	}
+
+	void NextMatch(){
+		scores[winner]+=1;
+
+		if (opponent<4)
+			opponent+=1;
+		else
+			GameOver();
+
+		scorePlayer=0;
+		scoreEnemy=0;
+	}
+
+	void GameOver(){
+		for(int i=1; i<5; i++){
+			scores[i]+=Random.Range(0,4);
+		}
+
+		int finalWinnerScore=0;
+		for(int i=0; i<5; i++){
+			if (scores[i]>finalWinnerScore){
+				finalWinnerScore=scores[i];
+				finalWinner=i;
+			}
+		}
 	}
 }
