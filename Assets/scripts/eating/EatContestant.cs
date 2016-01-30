@@ -35,20 +35,22 @@ public class EatContestant : MonoBehaviour {
         if (!Menu.instance.gameIsRunning) {
             return;
         }
-	    if (!brainfreeze && !broccoli && !isPlayer && UnityEngine.Random.Range(0f, 1f) < probability*Time.deltaTime) {
-            Eat();
+        if (!brainfreeze && !broccoli) {
+            if (!isPlayer && UnityEngine.Random.Range(0f, 1f) < probability * Time.deltaTime && brainfreezeThreatLevel < upperBoundary) {
+                Eat();
+            }
+            DecreaseBrainfreezeThreatLevel();
         }
-        DecreaseBrainfreezeThreatLevel();
         eat_o_meter.transform.localScale = new Vector3(1,brainfreezeThreatLevel*10,1);
 	}
-    public void Eat() {
+    public bool Eat() {
         if (brainfreeze) {
             Log("brainfozen! cant eat");
-            return;
+            return false;
         }
         if (broccoli) {
             Log("broccoli! cant eat");
-            return;
+            return false;
         }
         brainfreezeThreatLevel += increase * Time.deltaTime;
         eatingscore += 1;
@@ -58,22 +60,21 @@ public class EatContestant : MonoBehaviour {
         if (bowlFillAmount <= 0) {
             Log("i win!");
             // TODO play win animation
-            return;
+            return true;
         }
         if (brainfreezeThreatLevel > upperBoundary) {
             Log("brainfreeze!");
+            probability -= 0.1f; // for ai t prevent future freezes
             persona.GetComponent<Animator>().SetTrigger(FREEZE);
             brainfreeze = true;
-            return;
+            StartCoroutine(RemoveBrainfreezeAfter(2f));
+            return true;
         }
         persona.GetComponent<Animator>().SetTrigger(EAT);
+        return true;
     }
     private void DecreaseBrainfreezeThreatLevel() {
-        brainfreezeThreatLevel -= decrease * Time.deltaTime;
-        if (brainfreeze && brainfreezeThreatLevel < defreezeBoundary) {
-            // TODO maybe replace that with timing (after animation finishes)
-            Defreeze();
-        }
+        brainfreezeThreatLevel -= (brainfreezeThreatLevel/10 + decrease) * Time.deltaTime;
         if (brainfreezeThreatLevel < 0) {
             brainfreezeThreatLevel = 0;
         }
@@ -91,6 +92,10 @@ public class EatContestant : MonoBehaviour {
     public IEnumerator RemoveBroccoliAfter(float seconds) {
         yield return new WaitForSeconds(seconds);
         RemoveBroccoli();
+    }
+    public IEnumerator RemoveBrainfreezeAfter(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        Defreeze();
     }
     public void RemoveBroccoli() {
         broccoli = false;
