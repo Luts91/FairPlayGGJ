@@ -30,10 +30,20 @@ public class ShoutController : MonoBehaviour {
 	public float nextRoundTimer=0,nextRoundTime=4;
     public bool cheated = false;
 
+	public Sprite[] spritesIdle= new Sprite[5];
+	public Sprite[] spritesRate= new Sprite[5];
+	public Sprite[] spritesShout= new Sprite[5];
+
+	public SpriteRenderer player;
+	public SpriteRenderer[] jurys=new SpriteRenderer[4];
+
+	public GameObject[] ratingTexts=new GameObject[4];
+
     // Use this for initialization
     void Start () {
 		sc=this;
 		ChooseCharacter();
+		ClearRatingText();
 	}
 	
 	// Update is called once per frame
@@ -42,8 +52,12 @@ public class ShoutController : MonoBehaviour {
             return;
         }
 		if (!shoutingPhase && ((currentCharacter==0) || playerRated)){
+			
+
 			nextRoundTimer+=Time.deltaTime;
 			if (nextRoundTimer>=nextRoundTime){
+
+				ClearRatingText();
 				nextRoundTimer=0;
 				playerRated=false;
 
@@ -92,6 +106,14 @@ public class ShoutController : MonoBehaviour {
 		shouter.character=currentCharacter;
 		ratingText.text="";
 	
+		player.sprite=spritesShout[currentCharacter];
+
+		int jury=0;
+		for(int i=0; i<4; i++){
+			if (currentCharacter==jury)
+				jury++;
+			jurys[i].sprite=spritesIdle[jury++];
+		}
 	}
 
 	public void RatingPhase(float strength){
@@ -120,7 +142,38 @@ public class ShoutController : MonoBehaviour {
 			text+=ratings[i]+" ";
 		}
 
-		ratingText.text=text;
+		int jury=start;
+		for(int i=start; i<4; i++){
+			if (currentCharacter==jury)
+				jury++;
+			jurys[i].sprite=spritesRate[jury];
+
+			Rect rect=ratingTexts[i].GetComponent<RectTransform>().rect;
+
+			float y=0;
+			switch(jury){
+			case 0:
+				y=18.1f;
+				break;
+			case 1:
+				y=18.1f;
+				break;
+			case 2:
+				y=28.4f;
+				break;
+			case 3:
+				y=-17.7f;
+				break;
+			case 4:
+				y=19.5f;
+				break;
+			}
+			ratingTexts[i].GetComponent<RectTransform>().localPosition=new Vector2(ratingTexts[i].GetComponent<RectTransform>().localPosition.x,y);
+
+			jury++;
+		}
+
+		SetRatingText();
 	}
 
 	public void PlayerRate(int rating){
@@ -132,6 +185,27 @@ public class ShoutController : MonoBehaviour {
             cheated = true;
         }
 
-		ratingText.text=ratings[0]+" "+ratings[1]+" "+ratings[2]+" "+ratings[3];
+		jurys[0].sprite=spritesRate[0];
+		SetRatingText();
+
+	}
+
+	void SetRatingText(){
+		int start=0;
+
+		if (!playerRated && currentCharacter!=0){
+			start=1;
+		}
+
+
+		for(int i=start; i<4; i++){
+			ratingTexts[i].GetComponent<Text>().text=ratings[i]+"";
+		}
+	}
+
+	void ClearRatingText(){
+		for(int i=0; i<4; i++){
+			ratingTexts[i].GetComponent<Text>().text="";
+		}
 	}
 }
