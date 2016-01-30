@@ -28,6 +28,9 @@ public class TurnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!Menu.instance.gameIsRunning)
+			return;
+
 		if (nextTurn){
 			nextTurnTimer+=Time.deltaTime;
 			if (nextTurnTimer>=1){
@@ -62,6 +65,9 @@ public class TurnController : MonoBehaviour {
 				winner=i;
 			}
 		}
+
+		Menu.instance.endPanel.SetActive(true);
+		Menu.instance.gameIsRunning=false;
 	}
 
 

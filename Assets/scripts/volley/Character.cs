@@ -24,6 +24,9 @@ public class Character : MonoBehaviour {
 	}
 
 	public void Move(float x){
+		if (!Menu.instance.gameIsRunning)
+			return;
+
 		if  (stunned>0)
 			return;
 
@@ -32,6 +35,9 @@ public class Character : MonoBehaviour {
 	}
 
 	public void Jump(){
+		if (!Menu.instance.gameIsRunning)
+			return;
+
 		if (stunned>0)
 			return;
 

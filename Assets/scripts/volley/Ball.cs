@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour {
 
-	Rigidbody2D r;
+	public Rigidbody2D r;
 	float bounce=100;
 	Vector3 startPos;
 
@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour {
 		startPos=transform.position;
 		r=GetComponent<Rigidbody2D>();
 		Restart();
+		r.isKinematic=true;
 	}
 	
 	// Update is called once per frame
@@ -50,6 +51,7 @@ public class Ball : MonoBehaviour {
 	public void Restart(){
 		transform.position=startPos;
 		r.velocity=new Vector2(Random.value-1+2, Random.value+3);
+		r.isKinematic=false;
 	}
 		
 }

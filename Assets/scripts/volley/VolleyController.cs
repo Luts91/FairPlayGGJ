@@ -21,6 +21,8 @@ public class VolleyController : MonoBehaviour {
 
 	public float nextRoundTimer=0;
 
+	public bool firstBall=false;
+
 	// Use this for initialization
 	void Start () {
 		vc=this;
@@ -28,6 +30,14 @@ public class VolleyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!Menu.instance.gameIsRunning)
+			return;
+
+		if (!firstBall){
+			ball.Restart();
+			firstBall=true;
+		}
+
 
 		if (nextRoundTimer>0){
 			nextRoundTimer-=Time.deltaTime;
@@ -59,7 +69,7 @@ public class VolleyController : MonoBehaviour {
 		nextRoundTimer=2;
 
 		ball.enabled=false;
-
+		ball.r.isKinematic=true;
 	}
 
 	void NextMatch(){
@@ -86,5 +96,8 @@ public class VolleyController : MonoBehaviour {
 				finalWinner=i;
 			}
 		}
+
+		Menu.instance.gameIsRunning=false;
+		Menu.instance.endPanel.SetActive(true);
 	}
 }
