@@ -14,11 +14,11 @@ public class SoundPlayer : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
-	public void PlaySound(int i) {
+	public void PlaySound(int i, bool onlyOnce=false) {
 		if (!Menu.instance.gameIsRunning)
 			return;
 
-		if (audioSource.isPlaying)
+		if (onlyOnce && audioSource.isPlaying)
 			return;
 
 
