@@ -45,6 +45,7 @@ public class Bot : MonoBehaviour {
 			moveX=0;
 
 			if (Random.value<sabotageProbability && sabotageCooldown<=0){
+				SoundPlayer.instance.PlaySound(2);
 				sabotageCooldown=2;
 				player.stunned=0.5f;
 			}

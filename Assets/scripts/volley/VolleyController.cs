@@ -113,6 +113,9 @@ public class VolleyController : MonoBehaviour {
 			}
 		}
 
+		ball.enabled=false;
+		ball.r.isKinematic=true;
+
 		Menu.instance.EndGame(finalWinner,cheated);
 	}
 

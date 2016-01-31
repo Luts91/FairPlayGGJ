@@ -40,6 +40,7 @@ public class PlayerControl : MonoBehaviour {
 			if (Input.GetMouseButtonDown(1) && sabotageCooldown<=0){
 				VolleyController.vc.cheated=true;
 				enemy.stunned=0.5f;
+				SoundPlayer.instance.PlaySound(2);
 			}
 		}
 	}
