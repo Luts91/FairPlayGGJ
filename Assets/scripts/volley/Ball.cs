@@ -47,7 +47,7 @@ public class Ball : MonoBehaviour {
 	}
 
 	void Bounce(float x,float y){
-		SoundPlayer.instance.PlaySound(0);
+		SoundPlayer.instance.PlaySound(0,true);
 
 		r.AddForce(new Vector2(x*bounce,y*bounce));
 
