@@ -63,6 +63,8 @@ public class VolleyController : MonoBehaviour {
 	}
 
 	public void RoundOver(float x){
+		SoundPlayer.instance.PlaySound(2);
+
 		if (x<0)
 			scoreEnemy+=1;
 		else

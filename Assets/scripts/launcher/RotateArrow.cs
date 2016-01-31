@@ -53,6 +53,8 @@ public class RotateArrow : MonoBehaviour {
 	}
 
 	void NextStep(){
+		SoundPlayer.instance.PlaySound(0);
+
 		this.enabled=false;
 		strength.enabled=true;
 		stick.angle=angle;

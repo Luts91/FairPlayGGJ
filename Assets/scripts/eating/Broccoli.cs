@@ -13,6 +13,7 @@ public class Broccoli : MonoBehaviour {
     }
     public void ThrowBroccoli(EatContestant from, EatContestant to) {
         StartCoroutine(MoveToPosition(from, to, timeToTravel));
+		SoundPlayer.instance.PlaySound(3);
     }
 
     IEnumerator MoveToPosition(EatContestant from, EatContestant to, float timeToTravel) {

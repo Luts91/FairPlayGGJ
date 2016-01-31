@@ -15,7 +15,16 @@ public class SoundPlayer : MonoBehaviour {
     }
 
 	public void PlaySound(int i) {
-		if (sounds.Count>=i)
+		if (!Menu.instance.gameIsRunning)
+			return;
+
+		if (audioSource.isPlaying)
+			return;
+
+
+		Debug.Log("play sound "+i);
+
+		if (sounds.Count>=i+1)
 			audioSource.PlayOneShot(sounds[i]);
     }
 

@@ -82,6 +82,8 @@ public class Character : MonoBehaviour {
 
 
 		if (isGrounded){
+			SoundPlayer.instance.PlaySound(3);
+
 			r.velocity=(new Vector2(0,jump));
 		
 

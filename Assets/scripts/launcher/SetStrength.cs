@@ -47,6 +47,8 @@ public class SetStrength : MonoBehaviour {
 	}
 
 	void Throw(){
+		SoundPlayer.instance.PlaySound(1);
+
 		stick.strength=strength;
 		stick.Throw();
 		this.enabled=false;

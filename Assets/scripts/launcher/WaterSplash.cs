@@ -7,7 +7,7 @@ public class WaterSplash : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		SoundPlayer.instance.PlaySound(2);
 	}
 	
 	// Update is called once per frame

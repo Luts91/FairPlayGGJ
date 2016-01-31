@@ -42,18 +42,15 @@ public class Ball : MonoBehaviour {
 		if (c.gameObject.GetComponent<Character>()){
 			r.AddForce((transform.position-c.transform.position+Vector3.up*2)*200);
 
-			if (!GetComponent<AudioSource>().isPlaying){
-				GetComponent<AudioSource>().Play();
-			}
+			SoundPlayer.instance.PlaySound(1);
 		}
 	}
 
 	void Bounce(float x,float y){
+		SoundPlayer.instance.PlaySound(0);
+
 		r.AddForce(new Vector2(x*bounce,y*bounce));
 
-		if (!GetComponent<AudioSource>().isPlaying){
-			GetComponent<AudioSource>().Play();
-		}
 	}
 
 	public void Restart(){

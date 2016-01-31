@@ -49,7 +49,7 @@ public class EatingGameLogic : MonoBehaviour {
             if (success) {
                 // counterattack 
                 double probabilityOfCounterattack = Math.Sin(Math.Min(1f, attackCount / 10f) * Math.PI / 2) / 2;
-                Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
+               // Debug.Log("probabilityOfCounterattack=" + probabilityOfCounterattack);
                 if (UnityEngine.Random.Range(0f, 1f) < probabilityOfCounterattack) {
                     Broccoli.instance.ThrowBroccoli(leader, steph);
                 }
@@ -63,7 +63,7 @@ public class EatingGameLogic : MonoBehaviour {
                 Broccoli.instance.ThrowBroccoli(steph, leader);
                 attackCount += 1;
             } else {
-                Debug.Log("attack is on cooldown");
+           //     Debug.Log("attack is on cooldown");
             }
 
         }
@@ -73,6 +73,7 @@ public class EatingGameLogic : MonoBehaviour {
             if (ec.bowlFillAmount <= 0) {
                 Menu.instance.EndGame(i, (attackCount > 0));
                 StopBackgroundSound();
+				SoundPlayer.instance.PlaySound(4);
                 return;
             }
         }

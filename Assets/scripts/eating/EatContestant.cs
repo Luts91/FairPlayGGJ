@@ -22,9 +22,6 @@ public class EatContestant : MonoBehaviour {
     public bool broccoli = false;
     public int eatingscore = 0;
     public int bitesPerPiece = 3;
-    private static int FREEZE = Animator.StringToHash("freeze");
-    private static int EAT = Animator.StringToHash("eat");
-    private static int WIN = Animator.StringToHash("win");
 
 	public Sprite idle,eat,freeze,brocoli;
 	public SpriteRenderer sprr;
@@ -77,6 +74,8 @@ public class EatContestant : MonoBehaviour {
 
 		eating=0.2f;
 
+		SoundPlayer.instance.PlaySound(0);
+
         brainfreezeThreatLevel += increase * Time.deltaTime;
         eatingscore += 1;
         if (eatingscore % bitesPerPiece == 0) {
@@ -94,6 +93,8 @@ public class EatContestant : MonoBehaviour {
             return true;
         }
         if (brainfreezeThreatLevel > upperBoundary) {
+			SoundPlayer.instance.PlaySound(2);
+
             probability -= 0.1f; // for ai t prevent future freezes
             //persona.GetComponent<Animator>().SetTrigger(FREEZE);
             brainfreeze = true;
@@ -112,7 +113,9 @@ public class EatContestant : MonoBehaviour {
     public void Defreeze() {
         brainfreeze = false;
     }
-    public void Broccoli() {
+	public void Broccoli() {
+		SoundPlayer.instance.PlaySound(1);
+
         broccoli = true;
         //persona.GetComponent<Animator>().SetTrigger(FREEZE);
         StartCoroutine(RemoveBroccoliAfter(2f));

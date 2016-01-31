@@ -47,6 +47,8 @@ public class Sabotager : MonoBehaviour {
 
 	void Throw(){
 		if (!thrown){
+			SoundPlayer.instance.PlaySound(1);
+
 			r.isKinematic=false;
 
 			r.velocity=(stick.transform.position-transform.position).normalized*strength;

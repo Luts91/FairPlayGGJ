@@ -117,6 +117,8 @@ public class ShoutController : MonoBehaviour {
 				winner=i;
 			}
 		}
+
+		SoundPlayer.instance.PlaySound(2);
 			
 		Menu.instance.EndGame(winner, cheated);
 	}
@@ -202,6 +204,8 @@ public class ShoutController : MonoBehaviour {
 	}
 
 	public void PlayerRate(int rating){
+		SoundPlayer.instance.PlaySound(1);
+
 		playerRatingSelection.SetActive(false);
 		ratings[0]=rating;
 		playerRated=true;
@@ -235,6 +239,9 @@ public class ShoutController : MonoBehaviour {
 	}
 
 	void ShowTurn(){
+		SoundPlayer.instance.PlaySound(0);
+
+
 		turnText.enabled=true;
 		turnText.gameObject.GetComponent<Animator>().enabled=true;
 		turnText.gameObject.GetComponent<Animator>().Play("TextSlide");
