@@ -4,9 +4,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndScreen : MonoBehaviour {
-
+    public GameObject main;
+    public GameObject outro;
     public Text winner;
     public Text cheated;
+
+    void Awake() {
+        main.SetActive(false);
+        outro.SetActive(true);
+    }
 
     void Start () {
         winner.text = "And the winners are:";
@@ -24,6 +30,10 @@ public class EndScreen : MonoBehaviour {
     public void BackToMain() {
         GameData.instance.Reset();
         SceneManager.LoadScene(0);
+    }
+    public void ShowEnding() {
+        main.SetActive(true);
+        outro.SetActive(false);
     }
     public void QuitGame() {
         Debug.Log("Goodbye!");
