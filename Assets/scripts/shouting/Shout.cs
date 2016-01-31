@@ -39,6 +39,8 @@ public class Shout : MonoBehaviour {
 	}
 
 	void OnEnable(){
+		SoundPlayer.instance.PlaySound(0);
+
 		strength=0;
 		timer=0;
 	}

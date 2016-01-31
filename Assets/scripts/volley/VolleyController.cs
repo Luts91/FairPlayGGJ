@@ -27,7 +27,6 @@ public class VolleyController : MonoBehaviour {
 
 	public Text versusText;
 	public float versusTextTimer=0;
-	bool firstMatch=true;
 
 	// Use this for initialization
 	void Start () {
